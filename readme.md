@@ -1,30 +1,24 @@
- # Discord Bot v14 Template
- ## Slash Commands Handler 
+ # Code Grow Communty Bot
  ### Installation
 
  ###  Install all the dependecies needed
  ```shell
- npm i
+ npm install
  ```
 
- ### Fill up the config.js file
+ ### Fill up the .env file
 ```js
-module.exports = {
-  token: "" || process.env.token, // main bot token
-  betatoken: '' || process.env.betatoken, // beta token
-  id: "" || process.env.id, // main bot id
-  betaID: ''|| process.env.betaID, // beta id
-  ownerID: "" || process.env.ownerID, // owner id
-  mongourl: "" || process.env.mongourl, // mongourl for when you want to use the Database
-  embedColor: 0x00ffff || process.env.embedColor,
-  status: "GLOBAL" || process.env.status, // or BETA
-}
+token=
+betatoken=
+id=
+betaID=
+mongorul=
 ```
 
  -----
-## This Template offer's you
+## Guide
 
- * ### Custom Database 
+ * ### Custom Database , good clone of QuickDB , since this template is made for beginners
  ```js
   client.db.set(key, value)
   
@@ -41,23 +35,66 @@ module.exports = {
   client.db.has(key)  
    
   ```
+ -----
 
-* ### Custom Moderation Logs
+## Creating Commands using SlashCommandBuilder
+
+* ### Slash Commands are always created within folders of slashCommands , you can find it at src/slashCommands/xxx 
+```js 
+const { SlashCommandBuilder } = require("discord.js"); // make sure to define SlashCommandBuilder
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("commandName") 
+    .setDescription("CommandDescription")
+    ,
+    async execute(interaction, client) {
+    }
+}
+// You will need to check https://discordjs.guide if you find it hard to create commands 
+```
+## Interactive buttons 
+* ### Optional, but in case you create a button thats used repeatly go to utils/buttons/xx and create a file for your button 
+> example: 
 ```js
-client.modLog(interaction, `Moderation Log message`)
+const {
+  ActionRowBuilder,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+} = require("discord.js");
+module.exports = {
+  customId: "test-button", // custom id of the button
+  label: "Testing Button", // button label 
+  execute: async (interaction, client) => {
+    // in this case I am using a modal, which is also handled in utils/modals/test.js 
+    const bug = new ModalBuilder()
+      .setCustomId("test-modal")
+      .setTitle("Title")
+      .addComponents([
+        new ActionRowBuilder().addComponents(
+          new TextInputBuilder()
+            .setCustomId("test-input")
+            .setLabel("Label")
+            .setStyle(TextInputStyle.Paragraph)
+            .setMinLength(69)
+            .setMaxLength(420)
+            .setPlaceholder("Placeholder")
+            .setRequired(true)
+        ),
+      ]);
+
+    await interaction.showModal(bug);
+  },
+};
 ```
 
-* ### Translate Function
 
-```js
-client.translate(interaction, embedColor, 'Any Text to translate in any language to any language', "Albanian") // language = every language that is supported by google translate
-```
 
-* ### Custom Embed Color per guild
 
-* ### Events Handler
 
-------
+
+
+
 
 > This Template is free to use, if you need support join my [Discord](https://sigmaxii.com/support) and feel free to tag me! 
 
