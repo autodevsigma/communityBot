@@ -24,8 +24,11 @@ module.exports = {
         let avatarX = canvasWidth / 2; // platos toy avatar ( profile picture )
         let avatarY = canvasHeight / 2; // ypsos toy avatar 
         let avatarRadius = 130; // kykliko sxima 
-        let padding = 20; // keno poy xrhsimopoieite anamesa sto welcome - avatar - username
-
+        var count = 0; 
+        if (namees.length >= 12) { 
+             count += 50
+        } 
+        
         let imagee = new Canvas(canvasWidth, canvasHeight)
             .printImage(imge, 0, 0, canvasWidth, canvasHeight)
             .setColor("#60eafc")
@@ -36,10 +39,11 @@ module.exports = {
             .printCircle(avatarX, avatarY, avatarRadius)
             .printCircularImage(imgge, avatarX, avatarY, avatarRadius)
             .setTextFont("80px toxigenesis")
-            .setTextAlign("left")
-            .printWrappedText(welcomeText, avatarX - avatarRadius - padding - 405, avatarY + 10) 
+            .setTextAlign("center")
+            .printWrappedText(welcomeText, canvasWidth / 4, avatarY + 10) 
+            .setTextAlign("center")
             .setTextFont("70px toxigenesis")
-            .printWrappedText(`@${namees}`, avatarX + avatarRadius + padding, avatarY + 10) 
+            .printWrappedText(`@${namees}`, canvasWidth - Math.floor(canvasWidth / 4) + count, avatarY + 10) 
             .setTextFont("30px toxigenesis")
             .setTextAlign("right")
             .printWrappedText(`Members: ${guild.memberCount}`, 1690, 260)
