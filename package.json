@@ -2,13 +2,15 @@
   "name": "Sigma bot",
   "version": "14.11.0",
   "description": "Sigma bot",
-    "scripts": {
+  "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
     "@discordjs/rest": "^1.7.1",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@napi-rs/canvas": "^0.1.53",
     "ascii-table": "^0.0.9",
+    "canvas-constructor": "^7.0.1",
     "chalk": "^5.2.0",
     "chalk-advanced": "^1.0.6",
     "date-fns": "^2.30.0",

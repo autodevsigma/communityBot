@@ -1,30 +1,18 @@
 const config = require('../../config.js');
+const { welcome } = require('../../utils/welcome.js');
 module.exports = {
-	name: 'guildMemberAdd',
-	execute(client, member) {
-        if (config.status != 'GLOBAL') {
+  name: 'guildMemberAdd',
+  execute(client, member) {
+    try { 
+      const channel = client.guild.channels.cache.get("1074706979404124170") // welcome channel id
+      welcome(client.guild, client.user, channel) // welcome function 
+    } catch (e) { 
+      console.log(e); 
+      return;
+    }
 
-            let guild = member.guild;
-            if (guild.id != '980539403099340841') {
-              return; 
-            }
-            const mcchannel = client.channels.cache.get("1038644279234535504")
-            const serverMembers = guild.memberCount;
-            mcchannel.setName(`👤・Members: ${serverMembers}`)
-          } else {
-           let guild = member.guild;
-        if (guild.id != '937084834868789278') {
-          return; 
-        }
-          
-        /**
-         * Member Counter
-         */
-        const mcchannel = client.channels.cache.get("943272220740943902")
-        const serverMembers = guild.memberCount;
-        mcchannel.setName(`👤・Members: ${serverMembers}`)
-        }
-}};
+  }
+};
 
 
 
