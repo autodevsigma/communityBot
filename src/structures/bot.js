@@ -1,7 +1,7 @@
 const { Client, Collection, GatewayIntentBits, Partials } = require("discord.js");
 const config = require('../config.js');
 const Database = require('../utils/Database.js');
-const { Slash, Events, Button, Modal }  = require('../handlers/handle.js');
+const { Slash, Events, Button, Modal, SelectMenu }  = require('../handlers/handle.js');
 
 
 module.exports = {
@@ -54,6 +54,7 @@ module.exports = {
                     Events(this);
                     Button(this);
                     Modal(this);
+                    SelectMenu(this);
                     this.db.connect();
                 })
             } else {
@@ -62,6 +63,7 @@ module.exports = {
                     Events(this)
                     Button(this);
                     Modal(this);
+                    SelectMenu(this);
                     this.db.connect();
                 })
             }

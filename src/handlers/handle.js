@@ -72,6 +72,11 @@ module.exports = {
   },
 
   Button: async function (client) {
+    if (!fs.existsSync("./src/utils/buttons")) {
+      console.log(`${ChalkAdvanced.red("Buttons: ")} ${ChalkAdvanced.gray(">")} ${ChalkAdvanced.yellow("No buttons folder found")}`);
+      return;
+    }
+
     const buttonsFolder = fs.readdirSync("./src/utils/buttons");
     const buttonsTable = [];
 
@@ -100,14 +105,53 @@ module.exports = {
     console.table(buttonsTable, ["Button", "Label", "Status"]);
   },
 
+  SelectMenu: async function (client) {
+    if (!fs.existsSync("./src/utils/selectMenus")) {
+      console.log(`${ChalkAdvanced.red("Select Menus: ")} ${ChalkAdvanced.gray(">")} ${ChalkAdvanced.yellow("No selectMenus folder found")}`);
+      return;
+    }
+
+    const selectMenusFolder = fs.readdirSync("./src/utils/selectMenus");
+    const selectMenusTable = [];
+
+    for (const selectMenuFile of selectMenusFolder) {
+      const selectMenuModule = require(`../utils/selectMenus/${selectMenuFile}`);
+      const selectMenuId = selectMenuModule.customId;
+      const selectMenuLabel = selectMenuModule.label;
+
+      const interactionCreateHandler = async (interaction) => {
+        if (!interaction.isStringSelectMenu()) return;
+        if (interaction.customId !== selectMenuId) return;
+
+        await selectMenuModule.execute(interaction, client);
+      };
+
+      client.on("interactionCreate", interactionCreateHandler);
+
+      selectMenusTable.push({
+        SelectMenu: selectMenuFile,
+        Label: selectMenuLabel,
+        Status: "Loaded",
+      });
+    }
+
+    console.log(`${ChalkAdvanced.red("Select Menus: ")} ${ChalkAdvanced.gray(">")}`);
+    console.table(selectMenusTable, ["SelectMenu", "Label", "Status"]);
+  },
+
   Modal: async function (client) {
+    if (!fs.existsSync("./src/utils/modals")) {
+      console.log(`${ChalkAdvanced.red("Modals: ")} ${ChalkAdvanced.gray(">")} ${ChalkAdvanced.yellow("No modals folder found")}`);
+      return;
+    }
+
     const modalFolder = fs.readdirSync("./src/utils/modals");
     const modalTable = [];
 
     for (const modalFile of modalFolder) {
       const modalModule = require(`../utils/modals/${modalFile}`);
       const modalId = modalModule.customId;
-      const modalTitle = modalModule.title;
+      const modalTitle = modalModule.title || modalModule.label;
 
       const interactionCreateHandler = async (interaction) => {
         if (!interaction.isModalSubmit()) return;
