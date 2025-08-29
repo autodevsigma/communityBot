@@ -36,7 +36,11 @@ module.exports = {
                     .setFooter({ text: `Submitted by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
 
                 const sentMessage = await suggestionChannel.send({ embeds: [suggestionEmbed], components: [buttons] });
-                
+                await sentMessage.startThread({
+                    name: "🗨️Σχολίασε:",
+                    autoArchiveDuration: 60,
+                    reason: "Thread for Discord suggestion discussion"
+                });
                 // Arxikopoioume ta dedomena gia to suggestion
                 await client.db.set(`suggestion_${sentMessage.id}`, {
                     upvotes: 0,
