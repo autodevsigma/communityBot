@@ -12,13 +12,14 @@ module.exports = {
     .setName("suggest")
     .setDescription("Make a suggestion for the server!"), 
     async execute(interaction, client) {
-        if (interaction.channel.id !== '1262444514862174311') {
-            return interaction.reply({ content: "Αυτή η εντολή μπορεί να χρησιμοποιηθεί μόνο στο κανάλι <#1262444514862174311>.", flags: 64 });
+        if (!interaction.member.permissions.has('Administrator')) {
+            return interaction.reply({ content: 'You do not have permission to use this command.', flags: 64 });
         }
         // Dimiourgia embed
         const suggestionEmbed = new EmbedBuilder()
-        .setTitle("Make a Suggestion")
-        .setDescription(`Επιλέξτε τον τύπο πρότασης που θέλετε να κάνετε:`)
+        .setTitle("Make a Suggestion!")
+        .setDescription(`# Επιλέξτε τον τύπο πρότασης που θέλετε να κάνετε:`)
+        .setThumbnail(interaction.guild.iconURL())
         .setColor(0x00ffff);
 
         // Dimiourgia select menu
@@ -50,11 +51,11 @@ module.exports = {
         .addComponents(suggestionSelectMenu);
 
         // Apostoli embed kai select menu
-        return interaction.reply({ 
+        await interaction.channel.send({ 
             embeds: [suggestionEmbed], // Embed
             components: [sugActionRow], // Select Menu
-            flags: 64 // Ephemeral 
         });
+        return interaction.reply({ content: 'Το μήνυμα πρότασης στάλθηκε με επιτυχία!', flags: 64 });
 
          // handler select menu sto src/utils/selectMenus/*
 
