@@ -22,7 +22,7 @@ module.exports = client;
 
 /**
  * 
- * This template is made by sigmaxii
+ * This template is made by theautodev
  * Sigma Bot aka https://theauto.dev is running with this template
  * Free to use without credits
  * Just add sigma bot in your server and we're cool 
